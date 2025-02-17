@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"profanity_filter",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"profanity_filter",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
