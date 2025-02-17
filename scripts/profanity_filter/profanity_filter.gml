@@ -13,13 +13,13 @@ global.profanity_char = [
 
 var _buffer = buffer_load("profanity_extreme");
 
-global.profanity_extreme = string_split(string_replace_all(buffer_read(_buffer, buffer_text), "\r", ""), "\n");
+global.profanity_extreme = array_unique(string_split(string_replace_all(buffer_read(_buffer, buffer_text), "\r", ""), "\n"));
 
 buffer_delete(_buffer);
 
 var _buffer = buffer_load("profanity");
 
-global.profanity = array_concat(global.profanity_extreme, string_split(string_replace_all(buffer_read(_buffer, buffer_text), "\r", ""), "\n"));
+global.profanity = array_unique(array_concat(global.profanity_extreme, string_split(string_replace_all(buffer_read(_buffer, buffer_text), "\r", ""), "\n")));
 
 buffer_delete(_buffer);
 
@@ -94,11 +94,6 @@ function profanity_filter(_string)
                 _text += string_letters(string_char_at(_string_parsed, j + _index));
                 
                 ++_index;
-            }
-            
-            if (_string == "S.H.I.T!") && (_profanity == "shit")
-            {
-                show_debug_message($"t: {_text}")
             }
             
             if (_text == "") || (string_pos(_profanity, _text) <= 0) continue;
