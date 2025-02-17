@@ -8,6 +8,7 @@ if (keyboard_check_pressed(vk_space))
         "SCNSUPNC",
         "3hr903fd",
         "@ S S",
+        "@ 5 5",
         "a S S",
         "WHAT THE HELL IS GOING ON",
         "the grass is green",
@@ -86,7 +87,7 @@ if (keyboard_check_pressed(vk_space))
         var h = profanity_filter(_value)
         show_debug_message(_value)
         show_debug_message(h)
-        show_debug_message("\n")
+        show_debug_message($"TIME: {current_time - t}ms\n")
         // show_debug_message($"{current_time - t} // {_value}: {h}")
     })
 }

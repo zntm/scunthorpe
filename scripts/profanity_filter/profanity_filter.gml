@@ -74,8 +74,6 @@ function profanity_filter(_string)
         }
     }
     
-    show_debug_message($"t: {_string_parsed}")
-    
     var _string_filtered = _string;
     
     for (var i = 0; i < __profanity_length; ++i)
@@ -98,33 +96,27 @@ function profanity_filter(_string)
                 ++_index;
             }
             
-            if (_text == "") continue;
-            
-            if (string_pos(_profanity, _text) > 0)
+            if (_string == "S.H.I.T!") && (_profanity == "shit")
             {
-                var _2 = string_copy(_string, j, _index);
-                
-                if (string_digits(_2) == _2)
-                {
-                    j += _index;
-                    
-                    continue;
-                }
-                
-                var _x1 = j - 1;
-                var _x2 = _index + 1;
-                
-                var _ = string_copy(_string_parsed, _x1, _x2 - j);
-                
-                if (array_contains(__profanity_extreme, _profanity)) ||
-                (((_x1 - 1 <= 0) || (string_letters(string_char_at(_string_parsed, _x1)) == "")) &&
-                ((j + _index - 1 >= _string_length) || (string_letters(string_char_at(_string_parsed, j + _index)) == "")))
-                {
-                    _string_filtered = string_copy(_string_filtered, 1, j - 1) + string_repeat("*", _index) + string_copy(_string_filtered, j + _index, _string_length - j + _index - 1);
-                }
-                
-                j += _index;
+                show_debug_message($"t: {_text}")
             }
+            
+            if (_text == "") || (string_pos(_profanity, _text) <= 0) continue;
+            
+            var _string_part = string_copy(_string, j, _index);
+            
+            if (string_length(string_letters(_string_part)) > 0)
+            {
+                var _start_index = j - 1;
+                var _end_index = _index + j;
+                
+                if (array_contains(__profanity_extreme, _profanity)) || (((_start_index - 1 <= 0) || (string_letters(string_char_at(_string, _start_index)) == "")) && ((_end_index - 1 >= _string_length) || (string_letters(string_char_at(_string, _end_index)) == "")))
+                {
+                    _string_filtered = string_copy(_string_filtered, 1, _start_index) + string_repeat("*", _index) + string_copy(_string_filtered, _end_index, _string_length + _index - _start_index);
+                }
+            }
+            
+            j += _index;
         }
     }
     
