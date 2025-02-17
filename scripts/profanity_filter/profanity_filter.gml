@@ -35,48 +35,48 @@ function profanity_filter(_string)
     
     var _string_length = string_length(_string);
     
-    var _string_filtered = string_lower(_string);
-    var _string_filtered_length = _string_length;
+    var _string_parsed = string_lower(_string);
+    var _string_parsed_length = _string_length;
     
     var _start_length = 0;
     var _end_length = 0;
     
-    while (_string_filtered_length < 0) && (string_lettersdigits(string_char_at(_string_filtered, 1)) == "")
+    while (_string_parsed_length < 0) && (string_lettersdigits(string_char_at(_string_parsed, 1)) == "")
     {
-        _string_filtered = string_delete(_string_filtered, 1, 1);
+        _string_parsed = string_delete(_string_parsed, 1, 1);
         
         ++_start_length;
-        --_string_filtered_length;
+        --_string_parsed_length;
     }
     
-    while (_string_filtered_length < 0) && (string_lettersdigits(string_char_at(_string_filtered, _string_length - _end_length)) == "")
+    while (_string_parsed_length < 0) && (string_lettersdigits(string_char_at(_string_parsed, _string_length - _end_length)) == "")
     {
-        _string_filtered = string_delete(_string_filtered, _string_length - _end_length, 1);
+        _string_parsed = string_delete(_string_parsed, _string_length - _end_length, 1);
         
         ++_end_length;
-        --_string_filtered_length;
+        --_string_parsed_length;
     }
     
-    _string_filtered = string_repeat(" ", _start_length) + _string_filtered + string_repeat(" ", _end_length);
+    _string_parsed = string_repeat(" ", _start_length) + _string_parsed + string_repeat(" ", _end_length);
     
     for (var i = 1; i <= _string_length; ++i)
     {
-        var _char = string_char_at(_string_filtered, i);
+        var _char = string_char_at(_string_parsed, i);
         
         for (var j = 0; j < __profanity_char_length; j += 2)
         {
             if (string_pos(_char, __profanity_char[j]) > 0)
             {
-                _string_filtered = string_copy(_string_filtered, 1, i - 1) + __profanity_char[j + 1] + string_copy(_string_filtered, i + 1, _string_length - i);
+                _string_parsed = string_copy(_string_parsed, 1, i - 1) + __profanity_char[j + 1] + string_copy(_string_parsed, i + 1, _string_length - i);
                 
                 break;
             }
         }
     }
     
-    show_debug_message($"t: {_string_filtered}")
+    show_debug_message($"t: {_string_parsed}")
     
-    var _string2 = _string;
+    var _string_filtered = _string;
     
     for (var i = 0; i < __profanity_length; ++i)
     {
@@ -85,15 +85,15 @@ function profanity_filter(_string)
         
         for (var j = 1; j <= _string_length; ++j)
         {
-            if (string_letters(string_char_at(_string_filtered, j)) == "") continue;
+            if (string_letters(string_char_at(_string_parsed, j)) == "") continue;
             
             var _index = _profanity_length;
             
-            var _text = string_letters(string_copy(_string_filtered, j, _index));
+            var _text = string_letters(string_copy(_string_parsed, j, _index));
             
             while (_index <= _string_length) && (string_length(string_letters(_text)) < _profanity_length)
             {
-                _text += string_letters(string_char_at(_string_filtered, j + _index));
+                _text += string_letters(string_char_at(_string_parsed, j + _index));
                 
                 ++_index;
             }
@@ -114,13 +114,13 @@ function profanity_filter(_string)
                 var _x1 = j - 1;
                 var _x2 = _index + 1;
                 
-                var _ = string_copy(_string_filtered, _x1, _x2 - j);
+                var _ = string_copy(_string_parsed, _x1, _x2 - j);
                 
                 if (array_contains(__profanity_extreme, _profanity)) ||
-                (((_x1 - 1 <= 0) || (string_letters(string_char_at(_string_filtered, _x1)) == "")) &&
-                ((j + _index - 1 >= _string_length) || (string_letters(string_char_at(_string_filtered, j + _index)) == "")))
+                (((_x1 - 1 <= 0) || (string_letters(string_char_at(_string_parsed, _x1)) == "")) &&
+                ((j + _index - 1 >= _string_length) || (string_letters(string_char_at(_string_parsed, j + _index)) == "")))
                 {
-                    _string2 = string_copy(_string2, 1, j - 1) + string_repeat("*", _index) + string_copy(_string2, j + _index, _string_length - j + _index - 1);
+                    _string_filtered = string_copy(_string_filtered, 1, j - 1) + string_repeat("*", _index) + string_copy(_string_filtered, j + _index, _string_length - j + _index - 1);
                 }
                 
                 j += _index;
@@ -128,5 +128,5 @@ function profanity_filter(_string)
         }
     }
     
-    return _string2;
+    return _string_filtered;
 }
