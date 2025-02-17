@@ -25,11 +25,6 @@ buffer_delete(_buffer);
 
 function profanity_filter(_string)
 {
-    static __filter = function(_char, _index)
-    {
-        return (string_pos(_char, "qwertyuiopasdfghjklzxcvbnm ") > 0);
-    }
-    
     static __profanity_char = global.profanity_char;
     static __profanity_char_length = array_length(__profanity_char);
     
@@ -40,24 +35,29 @@ function profanity_filter(_string)
     
     var _string_length = string_length(_string);
     
-    var _string3 = _string;
+    var _string_filtered = string_lower(_string);
+    var _string_filtered_length = _string_length;
     
     var _start_length = 0;
     var _end_length = 0;
     
-    while (string_lettersdigits(string_char_at(_string3, 1)) == "")
+    while (_string_filtered_length < 0) && (string_lettersdigits(string_char_at(_string_filtered, 1)) == "")
     {
-        _string3 = string_copy(_string3, 2, _string_length + ++_start_length);
+        _string_filtered = string_delete(_string_filtered, 1, 1);
+        
+        ++_start_length;
+        --_string_filtered_length;
     }
     
-    while (string_lettersdigits(string_char_at(_string3, _string_length - _end_length)) == "")
+    while (_string_filtered_length < 0) && (string_lettersdigits(string_char_at(_string_filtered, _string_length - _end_length)) == "")
     {
-        _string3 = string_copy(_string3, 1, _string_length - ++_end_length);
+        _string_filtered = string_delete(_string_filtered, _string_length - _end_length, 1);
+        
+        ++_end_length;
+        --_string_filtered_length;
     }
     
-    _string3 = string_repeat(" ", _start_length) + _string3 + string_repeat(" ", _end_length);
-    
-    var _string_filtered = string_lower(_string3);
+    _string_filtered = string_repeat(" ", _start_length) + _string_filtered + string_repeat(" ", _end_length);
     
     for (var i = 1; i <= _string_length; ++i)
     {
@@ -74,6 +74,8 @@ function profanity_filter(_string)
         }
     }
     
+    show_debug_message($"t: {_string_filtered}")
+    
     var _string2 = _string;
     
     for (var i = 0; i < __profanity_length; ++i)
@@ -87,12 +89,16 @@ function profanity_filter(_string)
             
             var _index = _profanity_length;
             
-            while (_index <= _string_length) && (string_length(string_letters(string_copy(_string_filtered, j, _index))) < _profanity_length)
+            var _text = string_letters(string_copy(_string_filtered, j, _index));
+            
+            while (_index <= _string_length) && (string_length(string_letters(_text)) < _profanity_length)
             {
+                _text += string_letters(string_char_at(_string_filtered, j + _index));
+                
                 ++_index;
             }
             
-            var _text = string_filter(string_copy(_string_filtered, j, _index), __filter);
+            if (_text == "") continue;
             
             if (string_pos(_profanity, _text) > 0)
             {

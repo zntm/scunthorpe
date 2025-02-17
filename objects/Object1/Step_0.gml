@@ -8,6 +8,7 @@ if (keyboard_check_pressed(vk_space))
         "SCNSUPNC",
         "3hr903fd",
         "@ S S",
+        "a S S",
         "WHAT THE HELL IS GOING ON",
         "the grass is green",
         "fuckingocunto ",
