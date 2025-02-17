@@ -11,8 +11,6 @@ global.profanity_char = [
     "0", "o"
 ];
 
-
-
 var _buffer = buffer_load("profanity_extreme");
 
 global.profanity_extreme = string_split(string_replace_all(buffer_read(_buffer, buffer_text), "\r", ""), "\n");
@@ -25,11 +23,13 @@ global.profanity = array_concat(global.profanity_extreme, string_split(string_re
 
 buffer_delete(_buffer);
 
-show_debug_message(global.profanity_extreme)
-show_debug_message(global.profanity)
-
 function profanity_filter(_string)
 {
+    static __filter = function(_char, _index)
+    {
+        return (string_pos(_char, "qwertyuiopasdfghjklzxcvbnm ") > 0);
+    }
+    
     static __profanity_char = global.profanity_char;
     static __profanity_char_length = array_length(__profanity_char);
     
@@ -39,8 +39,6 @@ function profanity_filter(_string)
     static __profanity_extreme = global.profanity_extreme;
     
     var _string_length = string_length(_string);
-    
-    var _string_filtered = "";
     
     var _string3 = _string;
     
@@ -57,36 +55,21 @@ function profanity_filter(_string)
         _string3 = string_copy(_string3, 1, _string_length - ++_end_length);
     }
     
-    _string3 = string_repeat(" ", _start_length) + _string3 + string_repeat(" ", _end_length)
+    _string3 = string_repeat(" ", _start_length) + _string3 + string_repeat(" ", _end_length);
+    
+    var _string_filtered = string_lower(_string3);
     
     for (var i = 1; i <= _string_length; ++i)
     {
-        var _char = string_char_at(_string3, i);
-        
-        var _broke = false;
+        var _char = string_char_at(_string_filtered, i);
         
         for (var j = 0; j < __profanity_char_length; j += 2)
         {
-            if (string_pos(_char, __profanity_char[j]) <= 0) continue;
-            
-            _string_filtered += __profanity_char[j + 1];
-            
-            _broke = true;
-            
-            break;
-        }
-        
-        if (!_broke)
-        {
-            var _ = string_lower(_char);
-            
-            if (string_letters(_) != "")
+            if (string_pos(_char, __profanity_char[j]) > 0)
             {
-                _string_filtered += _;
-            }
-            else
-            {
-                _string_filtered += " ";
+                _string_filtered = string_copy(_string_filtered, 1, i - 1) + __profanity_char[j + 1] + string_copy(_string_filtered, i + 1, _string_length - i);
+                
+                break;
             }
         }
     }
@@ -109,7 +92,7 @@ function profanity_filter(_string)
                 ++_index;
             }
             
-            var _text = string_letters(string_copy(_string_filtered, j, _index));
+            var _text = string_filter(string_copy(_string_filtered, j, _index), __filter);
             
             if (string_pos(_profanity, _text) > 0)
             {
@@ -127,10 +110,7 @@ function profanity_filter(_string)
                 
                 var _ = string_copy(_string_filtered, _x1, _x2 - j);
                 
-                // show_debug_message(_);
-                
                 if (array_contains(__profanity_extreme, _profanity)) ||
-                // (_ == _profanity) ||
                 (((_x1 - 1 <= 0) || (string_letters(string_char_at(_string_filtered, _x1)) == "")) &&
                 ((j + _index - 1 >= _string_length) || (string_letters(string_char_at(_string_filtered, j + _index)) == "")))
                 {

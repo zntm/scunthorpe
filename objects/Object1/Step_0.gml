@@ -83,7 +83,9 @@ if (keyboard_check_pressed(vk_space))
         var t = current_time;
         
         var h = profanity_filter(_value)
-        
-        show_debug_message($"{current_time - t} // {_value}: {h}")
+        show_debug_message(_value)
+        show_debug_message(h)
+        show_debug_message("\n")
+        // show_debug_message($"{current_time - t} // {_value}: {h}")
     })
 }

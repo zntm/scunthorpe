@@ -43,6 +43,7 @@
     {"id":{"name":"Object1","path":"objects/Object1/Object1.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"profanity_filter","path":"scripts/profanity_filter/profanity_filter.yy",},},
+    {"id":{"name":"string_filter","path":"scripts/string_filter/string_filter.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
