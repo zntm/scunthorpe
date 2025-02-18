@@ -77,7 +77,8 @@ if (keyboard_check_pressed(vk_space))
      "shit",                      // Basic
      "bitch",                     // Basic
      "ass",                       // Basic (should be censored only when it’s a standalone word in normal mode)
-     "asses"                      // Plural of “ass”
+     "asses",                      // Plural of “ass”
+    "text true fuck"
     ]
     
     array_foreach(g, function(_value)
