@@ -28,7 +28,6 @@
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[
-    {"$GMIncludedFile":"","%Name":".DS_Store","CopyToMask":-1,"filePath":"datafiles","name":".DS_Store","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"en.dic","CopyToMask":-1,"filePath":"datafiles/filter","name":"en.dic","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"profanity","CopyToMask":-1,"filePath":"datafiles","name":"profanity","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"profanity_extreme","CopyToMask":-1,"filePath":"datafiles","name":"profanity_extreme","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
@@ -43,7 +42,6 @@
     {"id":{"name":"Object1","path":"objects/Object1/Object1.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"profanity_filter","path":"scripts/profanity_filter/profanity_filter.yy",},},
-    {"id":{"name":"string_filter","path":"scripts/string_filter/string_filter.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
