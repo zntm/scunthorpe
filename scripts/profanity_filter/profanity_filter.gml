@@ -24,7 +24,7 @@ array_sort(global.profanity_extreme, _sort);
 
 buffer_delete(_buffer);
 
-var _buffer2 = buffer_load("profanity");
+var _buffer2 = buffer_load("profanity_regular");
 
 global.profanity = array_unique(array_concat(global.profanity_extreme, string_split(string_replace_all(buffer_read(_buffer2, buffer_text), "\r", ""), "\n")));
 
@@ -175,7 +175,7 @@ function profanity_filter(_string)
                 var _start_index = j - 1;
                 var _end_index = _index + j;
                 
-                if (((_start_index - 1 <= 0) || (string_letters(string_char_at(_string, _start_index)) == "")) && ((_end_index - 1 >= _string_length) || (string_letters(string_char_at(_string, _end_index)) == "")))
+                if (((_start_index <= 0) || (string_letters(string_char_at(_string, _start_index)) == "")) && ((_end_index > _string_length) || (string_letters(string_char_at(_string, _end_index)) == "")))
                 {
                     _string_filtered = string_copy(_string_filtered, 1, _start_index) + string_repeat("*", _index) + string_copy(_string_filtered, _end_index, _string_length + _index - _start_index);
                 }

@@ -28,9 +28,8 @@
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[
-    {"$GMIncludedFile":"","%Name":"en.dic","CopyToMask":-1,"filePath":"datafiles/filter","name":"en.dic","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"profanity","CopyToMask":-1,"filePath":"datafiles","name":"profanity","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"profanity_extreme","CopyToMask":-1,"filePath":"datafiles","name":"profanity_extreme","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"profanity_regular","CopyToMask":-1,"filePath":"datafiles","name":"profanity_regular","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
   "isEcma":false,
   "LibraryEmitters":[],

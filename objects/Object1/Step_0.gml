@@ -39,6 +39,7 @@ if (keyboard_check_pressed(vk_space))
         "fuck off",                     // Two-word phrase.
         "you fucking idiot",            // Contains profanity.
         "shit, damn it",                // Multiple profanities with punctuation.
+        "bass",
         "damnation",                    // Compound word; may be flagged depending on rules.,
      "badass",                    // Should ideally censor "ass" only if that’s desired
      "smartass",                  // Tests if “ass” in compound words is flagged or not
