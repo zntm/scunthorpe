@@ -76,14 +76,20 @@ function string_scunthorpe(_string)
             if (_length2 != _profanity_length)
             {
                 _length2 = _profanity_length;
-                
                 _index = _profanity_length;
                 
                 _text = string_letters(string_copy(_string_parsed, j, _index));
+                var _text_length = string_length(_text);
                 
-                while (_index <= _string_length) && (string_length(string_letters(_text)) < _profanity_length)
+                while (_index <= _string_length) && (_text_length < _profanity_length)
                 {
-                    _text += string_letters(string_char_at(_string_parsed, j + _index));
+                    var _char = string_letters(string_char_at(_string_parsed, j + _index));
+                    
+                    if (_char != "")
+                    {
+                        _text += _char;
+                        ++_text_length;
+                    }
                     
                     ++_index;
                 }
@@ -93,7 +99,7 @@ function string_scunthorpe(_string)
             
             var _string_part = string_copy(_string, j, _index);
             
-            if (string_length(string_letters(_string_part)) > 0)
+            if (string_letters(_string_part) != "")
             {
                 var _start_index = j - 1;
                 var _end_index = _index + j;
@@ -123,14 +129,20 @@ function string_scunthorpe(_string)
             if (_length2 != _profanity_length)
             {
                 _length2 = _profanity_length;
-                
                 _index = _profanity_length;
                 
                 _text = string_letters(string_copy(_string_parsed, j, _index));
+                var _text_length = string_length(_text);
                 
-                while (_index <= _string_length) && (string_length(string_letters(_text)) < _profanity_length)
+                while (_index <= _string_length) && (_text_length < _profanity_length)
                 {
-                    _text += string_letters(string_char_at(_string_parsed, j + _index));
+                    var _char = string_letters(string_char_at(_string_parsed, j + _index));
+                    
+                    if (_char != "")
+                    {
+                        _text += _char;
+                        ++_text_length;
+                    }
                     
                     ++_index;
                 }
@@ -140,7 +152,7 @@ function string_scunthorpe(_string)
             
             var _string_part = string_copy(_string, j, _index);
             
-            if (string_length(string_letters(_string_part)) > 0)
+            if (string_letters(_string_part) != "")
             {
                 var _start_index = j - 1;
                 var _end_index = _index + j;
