@@ -1,6 +1,6 @@
 {
   "$GMProject":"v1",
-  "%Name":"profanity-filter-gml",
+  "%Name":"scunthorpe",
   "AudioGroups":[
     {"$GMAudioGroup":"","%Name":"audiogroup_default","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
   ],
@@ -36,7 +36,7 @@
   "MetaData":{
     "IDEVersion":"2024.1300.0.743",
   },
-  "name":"profanity-filter-gml",
+  "name":"scunthorpe",
   "resources":[
     {"id":{"name":"obj_Control","path":"objects/obj_Control/obj_Control.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
