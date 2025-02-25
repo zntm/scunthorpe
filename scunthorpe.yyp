@@ -28,8 +28,8 @@
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[
-    {"$GMIncludedFile":"","%Name":"extreme.dic","CopyToMask":-1,"filePath":"datafiles/scunthorpe","name":"extreme.dic","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"regular.dic","CopyToMask":-1,"filePath":"datafiles/scunthorpe","name":"regular.dic","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"extreme.dic","CopyToMask":-1,"filePath":"datafiles/scunthorpe/en","name":"extreme.dic","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"regular.dic","CopyToMask":-1,"filePath":"datafiles/scunthorpe/en","name":"regular.dic","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
   "isEcma":false,
   "LibraryEmitters":[],
@@ -40,6 +40,7 @@
   "resources":[
     {"id":{"name":"obj_Control","path":"objects/obj_Control/obj_Control.yy",},},
     {"id":{"name":"rm_Scunthorpe","path":"rooms/rm_Scunthorpe/rm_Scunthorpe.yy",},},
+    {"id":{"name":"init_scunthorpe","path":"scripts/init_scunthorpe/init_scunthorpe.yy",},},
     {"id":{"name":"sort_string_length","path":"scripts/sort_string_length/sort_string_length.yy",},},
     {"id":{"name":"string_scunthorpe","path":"scripts/string_scunthorpe/string_scunthorpe.yy",},},
   ],

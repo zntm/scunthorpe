@@ -1,40 +1,12 @@
-global.profanity_char = [
-    "\@4", "a",
-    "\$5", "s",
-    "3", "e",
-    "\!1\|", "i",
-    "0", "o",
-    "7\+", "t",
-    "8", "b",
-    "6", "g",
-    "9", "g",
-    "0", "o",
-    "#", "h"
-];
-
-var _buffer = buffer_load("scunthorpe/extreme.dic");
-
-global.profanity_extreme = array_unique(string_split(string_replace_all(buffer_read(_buffer, buffer_text), "\r", ""), "\n"));
-
-array_sort(global.profanity_extreme, sort_string_length);
-
-buffer_delete(_buffer);
-
-var _buffer2 = buffer_load("scunthorpe/regular.dic");
-
-global.profanity_regular = array_unique(array_concat(global.profanity_extreme, string_split(string_replace_all(buffer_read(_buffer2, buffer_text), "\r", ""), "\n")));
-
-array_sort(global.profanity_regular, sort_string_length);
-
-buffer_delete(_buffer2);
+#macro SCUNTHORPE_CENSOR_CHAR "*"
 
 function string_scunthorpe(_string)
 {
     static __profanity_char = global.profanity_char;
     static __profanity_char_length = array_length(__profanity_char);
     
-    static __profanity = global.profanity_regular;
-    static __profanity_length = array_length(__profanity);
+    static __profanity_regular = global.profanity_regular;
+    static __profanity_regular_length = array_length(__profanity_regular);
     
     static __profanity_extreme = global.profanity_extreme;
     static __profanity_extreme_length = array_length(__profanity_extreme);
@@ -124,7 +96,7 @@ function string_scunthorpe(_string)
                 var _start_index = j - 1;
                 var _end_index = _index + j;
                 
-                _string_filtered = string_copy(_string_filtered, 1, _start_index) + string_repeat("*", _index) + string_copy(_string_filtered, _end_index, _string_length + _index - _start_index);
+                _string_filtered = string_copy(_string_filtered, 1, _start_index) + string_repeat(SCUNTHORPE_CENSOR_CHAR, _index) + string_copy(_string_filtered, _end_index, _string_length + _index - _start_index);
                 
                 j += _index;
                 
@@ -141,9 +113,9 @@ function string_scunthorpe(_string)
         _text = -1;
         _index = -1;
         
-        for (var i = 0; i < __profanity_length; ++i)
+        for (var i = 0; i < __profanity_regular_length; ++i)
         {
-            var _profanity = __profanity[i];
+            var _profanity = __profanity_regular[i];
             var _profanity_length = string_length(_profanity);
             
             if (_length2 != _profanity_length)
@@ -173,7 +145,7 @@ function string_scunthorpe(_string)
                 
                 if (((_start_index <= 0) || (string_letters(string_char_at(_string, _start_index)) == "")) && ((_end_index > _string_length) || (string_letters(string_char_at(_string, _end_index)) == "")))
                 {
-                    _string_filtered = string_copy(_string_filtered, 1, _start_index) + string_repeat("*", _index) + string_copy(_string_filtered, _end_index, _string_length + _index - _start_index);
+                    _string_filtered = string_copy(_string_filtered, 1, _start_index) + string_repeat(SCUNTHORPE_CENSOR_CHAR, _index) + string_copy(_string_filtered, _end_index, _string_length + _index - _start_index);
                 }
             }
             
