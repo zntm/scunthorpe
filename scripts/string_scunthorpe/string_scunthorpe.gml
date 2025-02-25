@@ -77,9 +77,7 @@ function string_scunthorpe(_string)
     {
         if (string_letters(string_char_at(_string_parsed, j)) == "") continue;
         
-        var _censored = false;
-        
-        var _length2 = -1;
+        #region Get All Possible Filterable Strings
         
         for (var i = 0; i < __profanity_unique_length_length; ++i)
         {
@@ -114,17 +112,28 @@ function string_scunthorpe(_string)
             __string_parsed_length[@ i] = _index;
         }
         
+        #endregion
+        
+        #region Filter Extreme Profanity
+        
+        var _censored = false;
+        
+        var _profanity_length_current = -1;
+        var _index = -1;
+        var _text = -1;
+        
         for (var i = 0; i < __profanity_extreme_length; ++i)
         {
             var _profanity = __profanity_extreme[i];
             var _profanity_length = string_length(_profanity);
             
-            var _text;
-            var _index = array_get_index(__profanity_unique_length, _profanity_length);
-            
-            if (_index == -1) continue;
-            
-            _text = __string_parsed[_index];
+            if (_profanity_length != _profanity_length_current)
+            {
+                _profanity_length_current = _profanity_length;
+                 
+                _index = array_get_index(__profanity_unique_length, _profanity_length);
+                _text = __string_parsed[_index];
+            }
             
             if (_text == "") || (string_pos(_profanity, _text) <= 0) continue;
             
@@ -149,23 +158,25 @@ function string_scunthorpe(_string)
         
         if (_censored) continue;
         
-        _length2 = -1;
+        #endregion
+        
+        #region Filter Regular Profanity
+        
+        _profanity_length_current = -1;
+        _index = -1;
+        _text = -1;
         
         for (var i = 0; i < __profanity_regular_length; ++i)
         {
             var _profanity = __profanity_regular[i];
             var _profanity_length = string_length(_profanity);
             
-            var _text;
-            var _index = array_get_index(__profanity_unique_length, _profanity_length);
-            
-            if (_index != -1)
+            if (_profanity_length != _profanity_length_current)
             {
+                _profanity_length_current = _profanity_length;
+                 
+                _index = array_get_index(__profanity_unique_length, _profanity_length);
                 _text = __string_parsed[_index];
-            }
-            else
-            {
-                _text = __string_parsed[__profanity_unique_length - 1];
             }
             
             if (_text == "") || (string_pos(_profanity, _text) <= 0) continue;
@@ -174,6 +185,7 @@ function string_scunthorpe(_string)
             
             var _string_part = string_copy(_string, j, _index2);
             
+            // NOTE: This check is to prevent words without letters to be censored like '@55'
             if (string_letters(_string_part) != "")
             {
                 var _start_index = j - 1;
@@ -189,6 +201,8 @@ function string_scunthorpe(_string)
             
             break;
         }
+        
+        #endregion
     }
     
     return _string_filtered;
