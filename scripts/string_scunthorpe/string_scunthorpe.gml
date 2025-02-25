@@ -16,38 +16,41 @@ function string_scunthorpe(_string)
     var _string_parsed = string_lower(_string);
     var _string_parsed_length = _string_length;
     
-    var _start_length = 0;
-    var _end_length = 0;
-    
-    while (_string_parsed_length < 0) && (string_lettersdigits(string_char_at(_string_parsed, 1)) == "")
+    if (string_lettersdigits(_string_parsed) != _string_parsed)
     {
-        _string_parsed = string_delete(_string_parsed, 1, 1);
+        var _start_length = 0;
+        var _end_length = 0;
         
-        ++_start_length;
-        --_string_parsed_length;
-    }
-    
-    while (_string_parsed_length < 0) && (string_lettersdigits(string_char_at(_string_parsed, _string_length - _end_length)) == "")
-    {
-        _string_parsed = string_delete(_string_parsed, _string_length - _end_length, 1);
-        
-        ++_end_length;
-        --_string_parsed_length;
-    }
-    
-    _string_parsed = string_repeat(" ", _start_length) + _string_parsed + string_repeat(" ", _end_length);
-    
-    for (var i = 1; i <= _string_length; ++i)
-    {
-        var _char = string_char_at(_string_parsed, i);
-        
-        for (var j = 0; j < __profanity_char_length; j += 2)
+        while (_string_parsed_length < 0) && (string_lettersdigits(string_char_at(_string_parsed, 1)) == "")
         {
-            if (string_pos(_char, __profanity_char[j]) > 0)
+            _string_parsed = string_delete(_string_parsed, 1, 1);
+            
+            ++_start_length;
+            --_string_parsed_length;
+        }
+        
+        while (_string_parsed_length < 0) && (string_lettersdigits(string_char_at(_string_parsed, _string_length - _end_length)) == "")
+        {
+            _string_parsed = string_delete(_string_parsed, _string_length - _end_length, 1);
+            
+            ++_end_length;
+            --_string_parsed_length;
+        }
+        
+        _string_parsed = string_repeat(" ", _start_length) + _string_parsed + string_repeat(" ", _end_length);
+        
+        for (var i = 1; i <= _string_length; ++i)
+        {
+            var _char = string_char_at(_string_parsed, i);
+            
+            for (var j = 0; j < __profanity_char_length; j += 2)
             {
-                _string_parsed = string_copy(_string_parsed, 1, i - 1) + __profanity_char[j + 1] + string_copy(_string_parsed, i + 1, _string_length - i);
-                
-                break;
+                if (string_pos(_char, __profanity_char[j]) > 0)
+                {
+                    _string_parsed = string_copy(_string_parsed, 1, i - 1) + __profanity_char[j + 1] + string_copy(_string_parsed, i + 1, _string_length - i);
+                    
+                    break;
+                }
             }
         }
     }
