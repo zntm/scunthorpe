@@ -52,7 +52,7 @@ function string_scunthorpe(_string)
             var _char = string_char_at(_string_parsed, i);
             
             if (!string_pos(_char, __profanity_char_keys)) continue;
-                
+            
             for (var j = 0; j < __profanity_char_length; j += 2)
             {
                 if (string_pos(_char, __profanity_char[j]) > 0)
