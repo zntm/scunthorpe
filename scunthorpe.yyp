@@ -40,8 +40,8 @@
   "resources":[
     {"id":{"name":"obj_Control","path":"objects/obj_Control/obj_Control.yy",},},
     {"id":{"name":"rm_Scunthorpe","path":"rooms/rm_Scunthorpe/rm_Scunthorpe.yy",},},
-    {"id":{"name":"profanity_filter","path":"scripts/profanity_filter/profanity_filter.yy",},},
     {"id":{"name":"sort_string_length","path":"scripts/sort_string_length/sort_string_length.yy",},},
+    {"id":{"name":"string_scunthorpe","path":"scripts/string_scunthorpe/string_scunthorpe.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",

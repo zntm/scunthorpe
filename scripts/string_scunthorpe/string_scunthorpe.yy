@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"profanity_filter",
+  "%Name":"string_scunthorpe",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"profanity_filter",
+  "name":"string_scunthorpe",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

@@ -28,7 +28,7 @@ array_sort(global.profanity_regular, sort_string_length);
 
 buffer_delete(_buffer2);
 
-function profanity_filter(_string)
+function string_scunthorpe(_string)
 {
     static __profanity_char = global.profanity_char;
     static __profanity_char_length = array_length(__profanity_char);
