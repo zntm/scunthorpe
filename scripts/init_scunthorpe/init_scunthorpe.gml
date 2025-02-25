@@ -12,29 +12,54 @@ global.profanity_char = [
     "#", "h"
 ];
 
+global.profanity_extreme = [];
+global.profanity_regular = [];
+
 function init_scunthorpe(_type)
 {
-    var _dir_extreme = $"scunthorpe/{_type}/extreme.dic";
-    var _dir_regular = $"scunthorpe/{_type}/regular.dic";
-    
-    if (!directory_exists($"scunthorpe/{_type}/")) || (!file_exists(_dir_extreme)) || (!file_exists(_dir_regular))
+    static __init = function(_name, _directory)
     {
-        throw "Missing scunthorpe files";
+        var _buffer = buffer_load(_directory);
+        
+        var _data = array_unique(string_split(string_replace_all(buffer_read(_buffer, buffer_text), "\r", ""), "\n"));
+        
+        array_sort(_data, sort_string_length);
+        
+        var _length = array_length(_data);
+        
+        array_resize(global[$ _name], _length)
+        
+        for (var i = 0; i < _length; ++i)
+        {
+            global[$ _name][@ i] = _data[i];
+        }
+        
+        buffer_delete(_buffer);
     }
     
-    var _buffer_extreme = buffer_load(_dir_extreme);
+    if (!directory_exists($"scunthorpe/{_type}/"))
+    {
+        array_resize(global.profanity_extreme, 0);
+        array_resize(global.profanity_regular, 0);
+        
+        exit;
+    }
     
-    global.profanity_extreme = array_unique(string_split(string_replace_all(buffer_read(_buffer_extreme, buffer_text), "\r", ""), "\n"));
+    if (file_exists($"scunthorpe/{_type}/extreme.dic"))
+    {
+        __init("profanity_extreme", $"scunthorpe/{_type}/extreme.dic");
+    }
+    else
+    {
+        array_resize(global.profanity_extreme, 0);
+    }
     
-    array_sort(global.profanity_extreme, sort_string_length);
-    
-    buffer_delete(_buffer_extreme);
-    
-    var _buffer_regular = buffer_load(_dir_regular);
-    
-    global.profanity_regular = array_unique(array_concat(global.profanity_extreme, string_split(string_replace_all(buffer_read(_buffer_regular, buffer_text), "\r", ""), "\n")));
-    
-    array_sort(global.profanity_regular, sort_string_length);
-    
-    buffer_delete(_buffer_regular);
+    if (file_exists($"scunthorpe/{_type}/regular.dic"))
+    {
+        __init("profanity_regular", $"scunthorpe/{_type}/regular.dic");
+    }
+    else
+    {
+        array_resize(global.profanity_regular, 0);
+    }
 }
