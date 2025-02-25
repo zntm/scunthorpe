@@ -38,7 +38,7 @@
   },
   "name":"profanity-filter-gml",
   "resources":[
-    {"id":{"name":"Object1","path":"objects/Object1/Object1.yy",},},
+    {"id":{"name":"obj_Control","path":"objects/obj_Control/obj_Control.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
     {"id":{"name":"profanity_filter","path":"scripts/profanity_filter/profanity_filter.yy",},},
     {"id":{"name":"sort_string_length","path":"scripts/sort_string_length/sort_string_length.yy",},},
