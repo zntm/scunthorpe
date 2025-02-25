@@ -8,27 +8,23 @@ global.profanity_char = [
     "8", "b",
     "6", "g",
     "9", "g",
-    "0", "o"
+    "0", "o",
+    "#", "h"
 ];
-
-var _sort = function(_a, _b)
-{
-    return string_length(_b) - string_length(_a);
-}
 
 var _buffer = buffer_load("profanity_extreme");
 
 global.profanity_extreme = array_unique(string_split(string_replace_all(buffer_read(_buffer, buffer_text), "\r", ""), "\n"));
 
-array_sort(global.profanity_extreme, _sort);
+array_sort(global.profanity_extreme, sort_string_length);
 
 buffer_delete(_buffer);
 
 var _buffer2 = buffer_load("profanity_regular");
 
-global.profanity = array_unique(array_concat(global.profanity_extreme, string_split(string_replace_all(buffer_read(_buffer2, buffer_text), "\r", ""), "\n")));
+global.profanity_regular = array_unique(array_concat(global.profanity_extreme, string_split(string_replace_all(buffer_read(_buffer2, buffer_text), "\r", ""), "\n")));
 
-array_sort(global.profanity, _sort);
+array_sort(global.profanity_regular, sort_string_length);
 
 buffer_delete(_buffer2);
 
@@ -37,7 +33,7 @@ function profanity_filter(_string)
     static __profanity_char = global.profanity_char;
     static __profanity_char_length = array_length(__profanity_char);
     
-    static __profanity = global.profanity;
+    static __profanity = global.profanity_regular;
     static __profanity_length = array_length(__profanity);
     
     static __profanity_extreme = global.profanity_extreme;
