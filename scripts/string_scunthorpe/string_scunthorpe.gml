@@ -88,22 +88,27 @@ function string_scunthorpe(_string)
                 _length2 = _profanity_length;
                 _index = _profanity_length;
                 
-                _text = string_letters(string_copy(_string_parsed, j, _index));
+                var _string_part = string_copy(_string_parsed, j, _index);
                 
-                var _text_length = string_length(_text);
+                _text = string_letters(_string_part);
                 
-                while (j + _index <= _string_length) && (_text_length < _profanity_length)
+                if (_text != _string_part)
                 {
-                    var _char = string_letters(string_char_at(_string_parsed, j + _index));
+                    var _text_length = string_length(_text);
                     
-                    if (_char != "")
+                    while (j + _index <= _string_length) && (_text_length < _profanity_length)
                     {
-                        _text += _char;
+                        var _char = string_letters(string_char_at(_string_parsed, j + _index));
                         
-                        ++_text_length;
+                        if (_char != "")
+                        {
+                            _text += _char;
+                            
+                            ++_text_length;
+                        }
+                        
+                        ++_index;
                     }
-                    
-                    ++_index;
                 }
             }
             
@@ -143,22 +148,27 @@ function string_scunthorpe(_string)
                 _length2 = _profanity_length;
                 _index = _profanity_length;
                 
-                _text = string_letters(string_copy(_string_parsed, j, _index));
+                var _string_part = string_copy(_string_parsed, j, _index);
                 
-                var _text_length = string_length(_text);
+                _text = string_letters(_string_part);
                 
-                while (j + _index <= _string_length) && (_text_length < _profanity_length)
+                if (_text != _string_part)
                 {
-                    var _char = string_letters(string_char_at(_string_parsed, j + _index));
+                    var _text_length = string_length(_text);
                     
-                    if (_char != "")
+                    while (j + _index <= _string_length) && (_text_length < _profanity_length)
                     {
-                        _text += _char;
+                        var _char = string_letters(string_char_at(_string_parsed, j + _index));
                         
-                        ++_text_length;
+                        if (_char != "")
+                        {
+                            _text += _char;
+                            
+                            ++_text_length;
+                        }
+                        
+                        ++_index;
                     }
-                    
-                    ++_index;
                 }
             }
             
