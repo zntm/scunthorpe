@@ -12,6 +12,15 @@ global.profanity_char = [
     "#", "h"
 ];
 
+global.profanity_char_keys = "";
+
+var _profanity_char_length = array_length(global.profanity_char) / 2;
+
+for (var i = 0; i < _profanity_char_length; ++i)
+{
+    global.profanity_char_keys += global.profanity_char[i * 2];
+}
+
 global.profanity_extreme = [];
 global.profanity_extreme_unique_length = [];
 

@@ -5,6 +5,8 @@ function string_scunthorpe(_string)
     static __profanity_char = global.profanity_char;
     static __profanity_char_length = array_length(__profanity_char);
     
+    static __profanity_char_keys = global.profanity_char_keys;
+    
     static __profanity_regular = global.profanity_regular;
     static __profanity_regular_length = array_length(__profanity_regular);
     
@@ -16,6 +18,7 @@ function string_scunthorpe(_string)
     var _string_parsed = string_lower(_string);
     var _string_parsed_length = _string_length;
     
+    // Filter out ends of the string. This is due to exclamations like 'shit!' and 'WHAT THE FUCK???'
     if (string_lettersdigits(_string_parsed) != _string_parsed)
     {
         var _start_length = 0;
@@ -37,12 +40,19 @@ function string_scunthorpe(_string)
             --_string_parsed_length;
         }
         
+        if (_string_parsed_length <= 0)
+        {
+            return _string;
+        }
+        
         _string_parsed = string_repeat(" ", _start_length) + _string_parsed + string_repeat(" ", _end_length);
         
         for (var i = 1; i <= _string_length; ++i)
         {
             var _char = string_char_at(_string_parsed, i);
             
+            if (!string_pos(_char, __profanity_char_keys)) continue;
+                
             for (var j = 0; j < __profanity_char_length; j += 2)
             {
                 if (string_pos(_char, __profanity_char[j]) > 0)
@@ -79,15 +89,17 @@ function string_scunthorpe(_string)
                 _index = _profanity_length;
                 
                 _text = string_letters(string_copy(_string_parsed, j, _index));
+                
                 var _text_length = string_length(_text);
                 
-                while (_index <= _string_length) && (_text_length < _profanity_length)
+                while (j + _index <= _string_length) && (_text_length < _profanity_length)
                 {
                     var _char = string_letters(string_char_at(_string_parsed, j + _index));
                     
                     if (_char != "")
                     {
                         _text += _char;
+                        
                         ++_text_length;
                     }
                     
@@ -132,15 +144,17 @@ function string_scunthorpe(_string)
                 _index = _profanity_length;
                 
                 _text = string_letters(string_copy(_string_parsed, j, _index));
+                
                 var _text_length = string_length(_text);
                 
-                while (_index <= _string_length) && (_text_length < _profanity_length)
+                while (j + _index <= _string_length) && (_text_length < _profanity_length)
                 {
                     var _char = string_letters(string_char_at(_string_parsed, j + _index));
                     
                     if (_char != "")
                     {
                         _text += _char;
+                        
                         ++_text_length;
                     }
                     
