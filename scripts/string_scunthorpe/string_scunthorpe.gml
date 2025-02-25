@@ -141,6 +141,7 @@ function string_scunthorpe(_string)
             
             var _string_part = string_copy(_string, j, _index2);
             
+            // NOTE: This check is to prevent words without letters to be censored like '@55'
             if (string_letters(_string_part) != "")
             {
                 var _start_index = j - 1;
