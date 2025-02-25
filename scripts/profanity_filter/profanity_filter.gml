@@ -12,7 +12,7 @@ global.profanity_char = [
     "#", "h"
 ];
 
-var _buffer = buffer_load("profanity_extreme");
+var _buffer = buffer_load("scunthorpe/extreme.dic");
 
 global.profanity_extreme = array_unique(string_split(string_replace_all(buffer_read(_buffer, buffer_text), "\r", ""), "\n"));
 
@@ -20,7 +20,7 @@ array_sort(global.profanity_extreme, sort_string_length);
 
 buffer_delete(_buffer);
 
-var _buffer2 = buffer_load("profanity_regular");
+var _buffer2 = buffer_load("scunthorpe/regular.dic");
 
 global.profanity_regular = array_unique(array_concat(global.profanity_extreme, string_split(string_replace_all(buffer_read(_buffer2, buffer_text), "\r", ""), "\n")));
 

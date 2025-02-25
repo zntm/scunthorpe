@@ -28,8 +28,8 @@
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[
-    {"$GMIncludedFile":"","%Name":"profanity_extreme","CopyToMask":-1,"filePath":"datafiles","name":"profanity_extreme","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"profanity_regular","CopyToMask":-1,"filePath":"datafiles","name":"profanity_regular","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"extreme.dic","CopyToMask":-1,"filePath":"datafiles/scunthorpe","name":"extreme.dic","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"regular.dic","CopyToMask":-1,"filePath":"datafiles/scunthorpe","name":"regular.dic","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
   "isEcma":false,
   "LibraryEmitters":[],
@@ -39,14 +39,14 @@
   "name":"scunthorpe",
   "resources":[
     {"id":{"name":"obj_Control","path":"objects/obj_Control/obj_Control.yy",},},
-    {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"id":{"name":"rm_Scunthorpe","path":"rooms/rm_Scunthorpe/rm_Scunthorpe.yy",},},
     {"id":{"name":"profanity_filter","path":"scripts/profanity_filter/profanity_filter.yy",},},
     {"id":{"name":"sort_string_length","path":"scripts/sort_string_length/sort_string_length.yy",},},
   ],
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+    {"roomId":{"name":"rm_Scunthorpe","path":"rooms/rm_Scunthorpe/rm_Scunthorpe.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
