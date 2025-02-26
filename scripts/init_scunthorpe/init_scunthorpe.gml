@@ -32,9 +32,9 @@ function init_scunthorpe(_type)
     {
         var _buffer = buffer_load(_directory);
         
-        var _data = array_unique(string_split(string_replace_all(buffer_read(_buffer, buffer_text), "\r", ""), "\n"));
+        var _data = string_split(string_replace_all(buffer_read(_buffer, buffer_text), "\r", ""), "\n");
         
-        array_sort(_data, sort_string_length);
+        // array_sort(_data, sort_string_length);
         
         var _unique_length = -1;
         var _unique_length_index = 0;

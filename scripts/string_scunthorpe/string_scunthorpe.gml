@@ -95,11 +95,13 @@ function string_scunthorpe(_string)
                 
                 while (j + _index <= _string_length) && (_text_length < _profanity_length)
                 {
-                    var _char = string_letters(string_char_at(_string_parsed, j + _index));
+                    var _char = string_char_at(_string_parsed, j + _index);
                     
-                    if (_char != "")
+                    var _letter = string_letters(_char);
+                    
+                    if (_letter != "")
                     {
-                        _text += _char;
+                        _text += _letter;
                         
                         ++_text_length;
                     }
@@ -132,16 +134,19 @@ function string_scunthorpe(_string)
                 _profanity_length_current = _profanity_length;
                  
                 _index = array_get_index(__profanity_unique_length, _profanity_length);
+                
+                if (_index == -1) continue;
+                
                 _text = __string_parsed[_index];
             }
             
-            if (_text == "") || (string_pos(_profanity, _text) <= 0) continue;
+            if (_index == -1) || (_text == "") || (string_pos(_profanity, _text) <= 0) continue;
             
             var _index2 = __string_parsed_length[_index];
             
             var _string_part = string_copy(_string, j, _index2);
             
-            // NOTE: This check is to prevent words without letters to be censored like '@55'
+            // NOTE: This check with string_letters is to prevent words without letters to be censored like '@55'
             if (string_letters(_string_part) != "")
             {
                 var _start_index = j - 1;
@@ -177,16 +182,19 @@ function string_scunthorpe(_string)
                 _profanity_length_current = _profanity_length;
                  
                 _index = array_get_index(__profanity_unique_length, _profanity_length);
+                
+                if (_index == -1) continue;
+                
                 _text = __string_parsed[_index];
             }
             
-            if (_text == "") || (string_pos(_profanity, _text) <= 0) continue;
+            if (_index == -1) || (_text == "") || (string_pos(_profanity, _text) <= 0) continue;
             
             var _index2 = __string_parsed_length[_index];
             
             var _string_part = string_copy(_string, j, _index2);
             
-            // NOTE: This check is to prevent words without letters to be censored like '@55'
+            // NOTE: This check with string_letters is to prevent words without letters to be censored like '@55'
             if (string_letters(_string_part) != "")
             {
                 var _start_index = j - 1;
