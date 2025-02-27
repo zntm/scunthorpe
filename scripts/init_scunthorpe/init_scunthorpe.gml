@@ -51,10 +51,8 @@ function init_scunthorpe(_type)
             var _profanity = _data[i];
             var _profanity_length = string_length(_profanity);
             
-            if (_profanity_length_previous > _profanity_length)
+            if (!array_contains(global.profanity_unique_length, _profanity_length))
             {
-                _profanity_length_previous = _profanity_length;
-                
                 array_push(global.profanity_unique_length, _profanity_length);
             }
             
