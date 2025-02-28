@@ -1,6 +1,6 @@
 # Scunthorpe
 
-Scunthorpe is a simple profanity filter for GameMaker.
+Scunthorpe is a simple string profanity filter for GameMaker.
 
 List of profanity words from: https://github.com/coffee-and-fun/google-profanity-words
 
