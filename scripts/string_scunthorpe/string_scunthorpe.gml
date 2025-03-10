@@ -1,5 +1,10 @@
 #macro SCUNTHORPE_CENSOR_CHAR "*"
 
+/**
+ * Function Description
+ * @param {string} _string Description
+ * @returns {string} Description
+ */
 function string_scunthorpe(_string)
 {
     static __profanity_char = global.profanity_char;
@@ -206,7 +211,7 @@ function string_scunthorpe(_string)
                 }
             }
             
-            j += _index;
+            j += _index2;
             
             break;
         }

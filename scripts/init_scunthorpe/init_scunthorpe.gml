@@ -35,6 +35,8 @@ function init_scunthorpe(_type)
         
         var _data = string_split(string_replace_all(buffer_read(_buffer, buffer_text), "\r", ""), "\n");
         
+        array_sort(_data, sort_string_length);
+        
         var _unique_length = -1;
         var _unique_length_index = 0;
         
