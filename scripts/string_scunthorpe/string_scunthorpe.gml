@@ -1,10 +1,7 @@
 #macro SCUNTHORPE_CENSOR_CHAR "*"
 
-/**
- * Function Description
- * @param {string} _string Description
- * @returns {string} Description
- */
+#macro SCUNTHORPE_IS_REALWORD_ONLY false
+
 function string_scunthorpe(_string)
 {
     static __profanity_char = global.profanity_char;
@@ -91,31 +88,16 @@ function string_scunthorpe(_string)
             var _index = _profanity_length;
             
             var _string_part = string_copy(_string_parsed, j, _index);
+            var _string_part_length = string_length(_string_part);
             
-            var _text = string_letters(_string_part);
-            
-            if (_text != _string_part)
+            while (j + _index <= _string_length) && (_string_part_length < _profanity_length)
             {
-                var _text_length = string_length(_text);
+                if (string_char_at(_string_parsed, j + _index) == " ") break;
                 
-                while (j + _index <= _string_length) && (_text_length < _profanity_length)
-                {
-                    var _char = string_char_at(_string_parsed, j + _index);
-                    
-                    var _letter = string_letters(_char);
-                    
-                    if (_letter != "")
-                    {
-                        _text += _letter;
-                        
-                        ++_text_length;
-                    }
-                    
-                    ++_index;
-                }
+                ++_index;
             }
             
-            __string_parsed[@ i] = _text;
+            __string_parsed[@ i] = _string_part;
             __string_parsed_length[@ i] = _index;
         }
         
@@ -151,13 +133,12 @@ function string_scunthorpe(_string)
             
             var _string_part = string_copy(_string, j, _index2);
             
-            // NOTE: This check with string_letters is to prevent words without letters to be censored like '@55'
-            if (string_letters(_string_part) != "")
+            if (!SCUNTHORPE_IS_REALWORD_ONLY) || (string_letters(_string_part) != "")
             {
                 var _start_index = j - 1;
                 var _end_index = _index2 + j;
                 
-                _string_filtered = string_copy(_string_filtered, 1, _start_index) + string_repeat(SCUNTHORPE_CENSOR_CHAR, _index2) + string_copy(_string_filtered, _end_index, _string_length + _index2 - _start_index);
+                _string_filtered = string_insert(string_repeat(SCUNTHORPE_CENSOR_CHAR, _index2), string_delete(_string_filtered, _start_index + 1, _index2), _start_index + 1);
                 
                 j += _index2;
                 
@@ -199,15 +180,14 @@ function string_scunthorpe(_string)
             
             var _string_part = string_copy(_string, j, _index2);
             
-            // NOTE: This check with string_letters is to prevent words without letters to be censored like '@55'
-            if (string_letters(_string_part) != "")
+            if (!SCUNTHORPE_IS_REALWORD_ONLY) || (string_letters(_string_part) != "")
             {
                 var _start_index = j - 1;
                 var _end_index = _index2 + j;
                 
                 if (((_start_index <= 0) || (string_letters(string_char_at(_string, _start_index)) == "")) && ((_end_index > _string_length) || (string_letters(string_char_at(_string, _end_index)) == "")))
                 {
-                    _string_filtered = string_copy(_string_filtered, 1, _start_index) + string_repeat(SCUNTHORPE_CENSOR_CHAR, _index2) + string_copy(_string_filtered, _end_index, _string_length + _index2 - _start_index);
+                    _string_filtered = string_insert(string_repeat(SCUNTHORPE_CENSOR_CHAR, _index2), string_delete(_string_filtered, _start_index + 1, _index2), _start_index + 1);
                 }
             }
             

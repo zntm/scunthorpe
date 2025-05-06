@@ -91,6 +91,4 @@ function init_scunthorpe(_type)
     }
     
     array_reverse_ext(global.profanity_unique_length);
-    
-    show_debug_message(global.profanity_unique_length);
 }
