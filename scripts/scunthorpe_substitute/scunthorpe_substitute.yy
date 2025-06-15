@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"sort_string_length",
+  "%Name":"scunthorpe_substitute",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"sort_string_length",
+  "name":"scunthorpe_substitute",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

@@ -1,203 +1,90 @@
 #macro SCUNTHORPE_CENSOR_CHAR "*"
 
-#macro SCUNTHORPE_IS_REALWORD_ONLY false
+#macro SCUNTHORPE_IS_REALWORD_ONLY true
 
 function string_scunthorpe(_string)
 {
-    static __profanity_char = global.profanity_char;
-    static __profanity_char_length = array_length(__profanity_char);
+    static __censor_extend = function(_profanity, _pos, _string, _string_length, _substitutions, _substitutions_length)
+    {
+        var _extend = 0;
+        
+        var _ = string_lower(string_copy(_string, _pos, _string_length));
+        
+        for (var j = 0; j < _substitutions_length; ++j)
+        {
+            var _substitution = _substitutions[j];
+            
+            var _a = _substitution[0];
+            
+            var _count = string_count(_a, _string);
+            
+            if (_count > 0)
+            {
+                show_debug_message($"g: {_count} {_a} {_substitution} {_string}")
+                _extend += (string_length(_a) - 1) * _count;
+            }
+        }
+        
+        return _extend;
+    }
+    var _substitutions        = global.__scunthorpe_substitutions;
+    var _substitutions_length = array_length(_substitutions);
     
-    static __profanity_char_keys = global.profanity_char_keys;
+    var _profanity_regular        = global.__scunthorpe_regular;
+    var _profanity_regular_length = array_length(_profanity_regular);
     
-    static __profanity_regular = global.profanity_regular;
-    static __profanity_regular_length = array_length(__profanity_regular);
-    
-    static __profanity_extreme = global.profanity_extreme;
-    static __profanity_extreme_length = array_length(__profanity_extreme);
-    
-    static __profanity_unique_length = global.profanity_unique_length;
-    static __profanity_unique_length_length = array_length(__profanity_unique_length);
-    
-    static __string_parsed = array_create(__profanity_unique_length_length);
-    static __string_parsed_length = array_create(__profanity_unique_length_length);
+    var _profanity_extreme        = global.__scunthorpe_extreme;
+    var _profanity_extreme_length = array_length(_profanity_extreme);
     
     var _string_length = string_length(_string);
     
-    var _string_parsed = string_lower(_string);
-    var _string_parsed_length = _string_length;
+    var _string_parsed = scunthorpe_substitute(string_lower(_string));
     
-    // Filter out ends of the string. This is due to exclamations like 'shit!' and 'WHAT THE FUCK???'
-    if (string_lettersdigits(_string_parsed) != _string_parsed)
+    // Censor extreme profanity words
+    for (var i = 0; i < _profanity_extreme_length; ++i)
     {
-        var _start_length = 0;
-        var _end_length = 0;
+        var _profanity = _profanity_extreme[i];
+        var _profanity_length = string_length(_profanity);
         
-        while (_string_parsed_length < 0) && (string_lettersdigits(string_char_at(_string_parsed, 1)) == "")
+        var _pos = string_pos(_profanity, _string_parsed);
+        
+        while (_pos > 0)
         {
-            _string_parsed = string_delete(_string_parsed, 1, 1);
+            _pos = string_pos(_profanity, _string_parsed);
             
-            ++_start_length;
-            --_string_parsed_length;
-        }
-        
-        while (_string_parsed_length < 0) && (string_lettersdigits(string_char_at(_string_parsed, _string_length - _end_length)) == "")
-        {
-            _string_parsed = string_delete(_string_parsed, _string_length - _end_length, 1);
+            var _censor_extend = __censor_extend(_profanity, _pos, _string, _string_length, _substitutions, _substitutions_length);
+            var _censor        = string_repeat(SCUNTHORPE_CENSOR_CHAR, _profanity_length + _censor_extend);
             
-            ++_end_length;
-            --_string_parsed_length;
-        }
-        
-        if (_string_parsed_length <= 0)
-        {
-            return _string;
-        }
-        
-        _string_parsed = string_repeat(" ", _start_length) + _string_parsed + string_repeat(" ", _end_length);
-        
-        for (var i = 1; i <= _string_length; ++i)
-        {
-            var _char = string_char_at(_string_parsed, i);
+            _string        = string_copy(_string,        1, _pos - 1) + _censor + string_copy(_string,        _pos + _profanity_length, _string_length - (_pos + _profanity_length - 1));
+            _string_parsed = string_copy(_string_parsed, 1, _pos - 1) + _censor + string_copy(_string_parsed, _pos + _profanity_length, _string_length - (_pos + _profanity_length - 1));
             
-            if (!string_pos(_char, __profanity_char_keys)) continue;
-            
-            for (var j = 0; j < __profanity_char_length; j += 2)
-            {
-                if (string_pos(_char, __profanity_char[j]) > 0)
-                {
-                    _string_parsed = string_copy(_string_parsed, 1, i - 1) + __profanity_char[j + 1] + string_copy(_string_parsed, i + 1, _string_length - i);
-                    
-                    break;
-                }
-            }
+            show_debug_message($"{_censor_extend} {_string_parsed} {_censor} {_profanity}")
         }
     }
-    
-    var _string_filtered = _string;
-    
-    for (var j = 1; j <= _string_length; ++j)
+    /*
+    // Censor regular profanity words
+    for (var i = 0; i < _profanity_regular_length; ++i)
     {
-        if (string_letters(string_char_at(_string_parsed, j)) == "") continue;
+        var _profanity = _profanity_regular[i];
+        var _profanity_length = string_length(_profanity);
         
-        #region Get All Possible Filterable Strings
+        var _pos = string_pos(_profanity, _string_parsed);
         
-        for (var i = 0; i < __profanity_unique_length_length; ++i)
+        while (_pos > 0)
         {
-            var _profanity_length = __profanity_unique_length[i];
+            var _censor_extend = __censor_extend(_profanity, _pos, _string_parsed, _string_length, _substitutions, _substitutions_length);
+            var _censor        = string_repeat(SCUNTHORPE_CENSOR_CHAR, _profanity_length + _censor_extend);
             
-            var _index = _profanity_length;
+            _string_parsed = string_copy(_string_parsed, 1, _pos - 1) + _censor + string_copy(_string_parsed, _pos + _profanity_length + _censor_extend, _string_length - (_pos + _profanity_length + _censor_extend - 1));
             
-            var _string_part = string_copy(_string_parsed, j, _index);
-            var _string_part_length = string_length(_string_part);
-            
-            while (j + _index <= _string_length) && (_string_part_length < _profanity_length)
+            if (string_lettersdigits(string_char_at(_string_parsed, _pos - 1)) == "") && (string_lettersdigits(string_char_at(_string_parsed, _pos + _profanity_length)) == "")
             {
-                if (string_char_at(_string_parsed, j + _index) == " ") break;
-                
-                ++_index;
+                _string = string_copy(_string, 1, _pos - 1) + _censor + string_copy(_string, _pos + _profanity_length + _censor_extend, _string_length - (_pos + _profanity_length + _censor_extend - 1));
             }
             
-            __string_parsed[@ i] = _string_part;
-            __string_parsed_length[@ i] = _index;
+            _pos = string_pos(_profanity, _string_parsed);
         }
-        
-        #endregion
-        
-        #region Filter Extreme Profanity
-        
-        var _censored = false;
-        
-        var _profanity_length_current = -1;
-        var _index = -1;
-        var _text = -1;
-        
-        for (var i = 0; i < __profanity_extreme_length; ++i)
-        {
-            var _profanity = __profanity_extreme[i];
-            var _profanity_length = string_length(_profanity);
-            
-            if (_profanity_length != _profanity_length_current)
-            {
-                _profanity_length_current = _profanity_length;
-                 
-                _index = array_get_index(__profanity_unique_length, _profanity_length);
-                
-                if (_index == -1) continue;
-                
-                _text = __string_parsed[_index];
-            }
-            
-            if (_index == -1) || (_text == "") || (string_pos(_profanity, _text) <= 0) continue;
-            
-            var _index2 = __string_parsed_length[_index];
-            
-            var _string_part = string_copy(_string, j, _index2);
-            
-            if (!SCUNTHORPE_IS_REALWORD_ONLY) || (string_letters(_string_part) != "")
-            {
-                var _start_index = j - 1;
-                var _end_index = _index2 + j;
-                
-                _string_filtered = string_insert(string_repeat(SCUNTHORPE_CENSOR_CHAR, _index2), string_delete(_string_filtered, _start_index + 1, _index2), _start_index + 1);
-                
-                j += _index2;
-                
-                _censored = true;
-                
-                break;
-            }
-        }
-        
-        if (_censored) continue;
-        
-        #endregion
-        
-        #region Filter Regular Profanity
-        
-        _profanity_length_current = -1;
-        _index = -1;
-        _text = -1;
-        
-        for (var i = 0; i < __profanity_regular_length; ++i)
-        {
-            var _profanity = __profanity_regular[i];
-            var _profanity_length = string_length(_profanity);
-            
-            if (_profanity_length != _profanity_length_current)
-            {
-                _profanity_length_current = _profanity_length;
-                 
-                _index = array_get_index(__profanity_unique_length, _profanity_length);
-                
-                if (_index == -1) continue;
-                
-                _text = __string_parsed[_index];
-            }
-            
-            if (_index == -1) || (_text == "") || (string_pos(_profanity, _text) <= 0) continue;
-            
-            var _index2 = __string_parsed_length[_index];
-            
-            var _string_part = string_copy(_string, j, _index2);
-            
-            if (!SCUNTHORPE_IS_REALWORD_ONLY) || (string_letters(_string_part) != "")
-            {
-                var _start_index = j - 1;
-                var _end_index = _index2 + j;
-                
-                if (((_start_index <= 0) || (string_letters(string_char_at(_string, _start_index)) == "")) && ((_end_index > _string_length) || (string_letters(string_char_at(_string, _end_index)) == "")))
-                {
-                    _string_filtered = string_insert(string_repeat(SCUNTHORPE_CENSOR_CHAR, _index2), string_delete(_string_filtered, _start_index + 1, _index2), _start_index + 1);
-                }
-            }
-            
-            j += _index2;
-            
-            break;
-        }
-        
-        #endregion
     }
-    
-    return _string_filtered;
+    */
+    return _string;
 }

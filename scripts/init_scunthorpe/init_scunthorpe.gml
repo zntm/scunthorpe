@@ -1,94 +1,102 @@
-global.profanity_char = [
-    "3\&",   "e",
-    "7\+",   "t",
-    "\@4",   "a",
-    "0",     "o",
-    "\!1\|", "i",
-    "\$5",   "s",
-    "\#",    "h",
-    "\(",    "c",
-    "69",    "g",
-    "8",     "b",
-    "\%",    "x",
-    "2",     "z"
-];
+global.__scunthorpe_substitutions = [];
 
-global.profanity_char_keys = "";
+global.__scunthorpe_extreme = [];
+global.__scunthorpe_regular = [];
 
-var _profanity_char_length = array_length(global.profanity_char) / 2;
-
-for (var i = 0; i < _profanity_char_length; ++i)
+function init_scunthorpe(_directory)
 {
-    global.profanity_char_keys += global.profanity_char[i * 2];
-}
-
-global.profanity_extreme = [];
-global.profanity_regular = [];
-
-global.profanity_unique_length = [];
-
-function init_scunthorpe(_type)
-{
-    static __init = function(_name, _directory)
+    static __init = function(_variable, _directory)
     {
+        static __sort = function(_a, _b)
+        {
+            return string_length(_b) - string_length(_a);
+        }
+        
         var _buffer = buffer_load(_directory);
         
         var _data = string_split(string_replace_all(buffer_read(_buffer, buffer_text), "\r", ""), "\n");
-        
-        array_sort(_data, sort_string_length);
         
         var _unique_length = -1;
         var _unique_length_index = 0;
         
         var _length = array_length(_data);
         
-        array_resize(global[$ _name], _length);
+        array_resize(_variable, _length);
         
-        var _profanity_length_previous = infinity;
+        var _substitutions        = global.__scunthorpe_substitutions;
+        var _substitutions_length = array_length(_substitutions);
         
         for (var i = 0; i < _length; ++i)
         {
-            var _profanity = _data[i];
-            var _profanity_length = string_length(_profanity);
-            
-            if (!array_contains(global.profanity_unique_length, _profanity_length))
-            {
-                array_push(global.profanity_unique_length, _profanity_length);
-            }
-            
-            global[$ _name][@ i] = _profanity;
+            _variable[@ i] = _data[i];
         }
+        
+        array_sort(_variable, __sort);
         
         buffer_delete(_buffer);
     }
     
-    if (!directory_exists($"scunthorpe/{_type}/"))
+    if (directory_exists(_directory))
     {
-        array_resize(global.profanity_extreme, 0);
-        array_resize(global.profanity_regular, 0);
+        array_resize(global.__scunthorpe_substitutions, 0);
         
-        exit;
-    }
-    
-    array_resize(global.profanity_unique_length, 0);
-    
-    if (file_exists($"scunthorpe/{_type}/extreme.dic"))
-    {
-        __init("profanity_extreme", $"scunthorpe/{_type}/extreme.dic");
+        if (file_exists($"{_directory}/substitution.json"))
+        {
+            static __sort_subsitution = function(_a, _b)
+            {
+                return string_length(_b[0]) - string_length(_a[0]);
+            }
+            
+            var _index = 0;
+            
+            var _buffer = buffer_load($"{_directory}/substitution.json");
+            
+            var _json = json_parse(buffer_read(_buffer, buffer_text));
+            
+            var _names  = struct_get_names(_json);
+            var _length = array_length(_names);
+            
+            for (var i = 0; i < _length; ++i)
+            {
+                var _name = _names[i];
+                var _data = _json[$ _name];
+                
+                var _length2 = array_length(_data);
+                
+                for (var j = 0; j < _length2; ++j)
+                {
+                    global.__scunthorpe_substitutions[@ _index++] = [ _data[j], _name ];
+                }
+            }
+            
+            array_sort(global.__scunthorpe_substitutions, __sort_subsitution);
+            
+            buffer_delete(_buffer);
+        }
+        
+        if (file_exists($"{_directory}/extreme.dic"))
+        {
+            __init(global.__scunthorpe_extreme, $"{_directory}/extreme.dic");
+        }
+        else
+        {
+            array_resize(global.__scunthorpe_extreme, 0);
+        }
+        
+        if (file_exists($"{_directory}/regular.dic"))
+        {
+            __init(global.__scunthorpe_regular, $"{_directory}/regular.dic");
+        }
+        else
+        {
+            array_resize(global.__scunthorpe_regular, 0);
+        }
     }
     else
     {
-        array_resize(global.profanity_extreme, 0);
+        array_resize(global.__scunthorpe_substitutions, 0);
+        
+        array_resize(global.__scunthorpe_extreme, 0);
+        array_resize(global.__scunthorpe_regular, 0);
     }
-    
-    if (file_exists($"scunthorpe/{_type}/regular.dic"))
-    {
-        __init("profanity_regular", $"scunthorpe/{_type}/regular.dic");
-    }
-    else
-    {
-        array_resize(global.profanity_regular, 0);
-    }
-    
-    array_reverse_ext(global.profanity_unique_length);
 }

@@ -1,4 +1,4 @@
-init_scunthorpe("en");
+init_scunthorpe("scunthorpe/en");
 
 keyboard_string = "";
 
