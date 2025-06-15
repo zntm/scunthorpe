@@ -1,7 +1,7 @@
 #macro SCUNTHORPE_CENSOR_CHAR "*"
-#macro SCUNTHORPE_PLACEHOLDER chr(0xffff)
 
-#macro SCUNTHORPE_IS_REALWORD_ONLY true
+#macro SCUNTHORPE_OFFSET_PLACEHOLDER chr(0x7fff)
+#macro SCUNTHORPE_CENSOR_PLACEHOLDER chr(0x8000)
 
 function string_scunthorpe(_string)
 {
@@ -58,7 +58,9 @@ function string_scunthorpe(_string)
         
         while (j < _string_length)
         {
-            if (!string_starts_with(string_replace_all(scunthorpe_substitute(string_copy(_string, j, _string_length)), SCUNTHORPE_PLACEHOLDER, ""), _profanity))
+            show_debug_message(scunthorpe_substitute(string_copy(_string, j, _string_length)));
+            
+            if (!string_starts_with(string_replace_all(scunthorpe_substitute(string_copy(_string, j, _string_length)), SCUNTHORPE_OFFSET_PLACEHOLDER, ""), _profanity))
             {
                 ++j;
                 
@@ -66,13 +68,14 @@ function string_scunthorpe(_string)
             }
             
             var _censor_length = __censor_length(j, _string, _profanity, _profanity_length, _substitutions, _substitutions_length);
-            var _censor        = string_repeat(SCUNTHORPE_CENSOR_CHAR, _censor_length);
+            var _censor        = string_repeat(SCUNTHORPE_CENSOR_PLACEHOLDER, _censor_length);
             
             _string = string_copy(_string, 1, j - 1) + _censor + string_copy(_string, j + _censor_length, _string_length - (j + _censor_length - 1));
             
             j += _censor_length;
         }
     }
+    
     /*
     // Censor regular profanity words
     for (var i = 0; i < _profanity_regular_length; ++i)
@@ -98,5 +101,5 @@ function string_scunthorpe(_string)
         }
     }
     */
-    return _string;
+    return string_replace_all(_string, SCUNTHORPE_CENSOR_PLACEHOLDER, SCUNTHORPE_CENSOR_CHAR);
 }
