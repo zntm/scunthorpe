@@ -16,9 +16,9 @@
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"data.json","CopyToMask":-1,"filePath":"datafiles/scunthorpe/en","name":"data.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"extreme.dic","CopyToMask":-1,"filePath":"datafiles/scunthorpe/en","name":"extreme.dic","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"regular.dic","CopyToMask":-1,"filePath":"datafiles/scunthorpe/en","name":"regular.dic","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"substitution.json","CopyToMask":-1,"filePath":"datafiles/scunthorpe/en","name":"substitution.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
   "isEcma":false,
   "LibraryEmitters":[],

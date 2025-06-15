@@ -40,7 +40,7 @@ function init_scunthorpe(_directory)
     {
         array_resize(global.__scunthorpe_substitutions, 0);
         
-        if (file_exists($"{_directory}/substitution.json"))
+        if (file_exists($"{_directory}/data.json"))
         {
             static __sort_subsitution = function(_a, _b)
             {
@@ -49,9 +49,9 @@ function init_scunthorpe(_directory)
             
             var _index = 0;
             
-            var _buffer = buffer_load($"{_directory}/substitution.json");
+            var _buffer = buffer_load($"{_directory}/data.json");
             
-            var _json = json_parse(buffer_read(_buffer, buffer_text));
+            var _json = json_parse(buffer_read(_buffer, buffer_text)).substitution;
             
             var _names  = struct_get_names(_json);
             var _length = array_length(_names);

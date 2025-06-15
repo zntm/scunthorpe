@@ -12,7 +12,7 @@ function scunthorpe_substitute(_string)
         
         if (string_pos(_a, _string) <= 0) continue;
         
-        _string = string_replace_all(_string, _a, _b + string_repeat(" ", string_length(_a) - string_length(_b)));
+        _string = string_replace_all(_string, _a, _b + string_repeat(SCUNTHORPE_PLACEHOLDER, string_length(_a) - string_length(_b)));
     }
     
     return _string;
