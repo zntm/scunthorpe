@@ -94,10 +94,6 @@ function string_scunthorpe(_string)
                 continue;
             }
             
-            show_debug_message(_profanity)
-            show_debug_message(string_lettersdigits(string_char_at(_string, j - 1)))
-            show_debug_message(string_lettersdigits(string_char_at(_string, j + _censor_length)))
-            
             if ((j > 1) && (string_lettersdigits(string_char_at(_string, j - 1)) != "")) || (string_lettersdigits(string_char_at(_string, j + _censor_length)) != "")
             {
                 ++j;
