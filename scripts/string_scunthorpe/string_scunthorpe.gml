@@ -45,6 +45,8 @@ function string_scunthorpe(_string)
     var _substitutions        = global.__scunthorpe_substitutions;
     var _substitutions_length = array_length(_substitutions);
     
+    var _string_substituted = scunthorpe_substitute(_string);
+    
     var _profanity_extreme        = global.__scunthorpe_extreme;
     var _profanity_extreme_length = array_length(_profanity_extreme);
     
@@ -67,8 +69,6 @@ function string_scunthorpe(_string)
         for (var j = 0; j < _group_length; ++j)
         {
             var _profanity = _profanity_extreme[_index_extreme + j];
-            
-            var _string_substituted = scunthorpe_substitute(_string, j);
             
             var m = 1;
             
@@ -132,8 +132,6 @@ function string_scunthorpe(_string)
         for (var j = 0; j < _group_length; ++j)
         {
             var _profanity = _profanity_regular[_index_regular + j];
-            
-            var _string_substituted = scunthorpe_substitute(_string, j);
             
             var m = 1;
             
