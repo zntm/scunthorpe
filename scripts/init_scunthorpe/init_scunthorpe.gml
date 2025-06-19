@@ -1,11 +1,15 @@
+global.___SCUNTHORPE_CENSOR = "*";
 global.__scunthorpe_substitutions = [];
 
 global.__scunthorpe_extreme = [];
+global.__scunthorpe_extreme_group = [];
+
 global.__scunthorpe_regular = [];
+global.__scunthorpe_regular_group = [];
 
 function init_scunthorpe(_directory)
 {
-    static __init = function(_variable, _directory)
+    static __init = function(_variable, _variable_length, _directory)
     {
         static __sort = function(_a, _b)
         {
@@ -23,15 +27,28 @@ function init_scunthorpe(_directory)
         
         array_resize(_variable, _length);
         
-        var _substitutions        = global.__scunthorpe_substitutions;
-        var _substitutions_length = array_length(_substitutions);
-        
         for (var i = 0; i < _length; ++i)
         {
-            _variable[@ i] = _data[i];
+            var _word = _data[i];
+            var _word_length = string_length(_word);
+            
+            _variable[@ i] = _word;
         }
         
         array_sort(_variable, __sort);
+        
+        for (var i = 0; i < _length; ++i)
+        {
+            var _word = _variable[@ i];
+            var _word_length = string_length(_word);
+            
+            if (array_length(_variable_length) < _word_length)
+            {
+                _variable_length[@ _word_length] = 0;
+            }
+            
+            ++_variable_length[@ _word_length];
+        }
         
         buffer_delete(_buffer);
     }
@@ -51,45 +68,56 @@ function init_scunthorpe(_directory)
             
             var _buffer = buffer_load($"{_directory}/data.json");
             
-            var _json = json_parse(buffer_read(_buffer, buffer_text)).substitution;
+            var _json = json_parse(buffer_read(_buffer, buffer_text));
             
-            var _names  = struct_get_names(_json);
+            var _json_substitution = _json.substitution;
+            
+            var _names  = struct_get_names(_json_substitution);
             var _length = array_length(_names);
             
             for (var i = 0; i < _length; ++i)
             {
                 var _name = _names[i];
-                var _data = _json[$ _name];
+                var _name_length = string_length(_name);
                 
-                var _length2 = array_length(_data);
+                var _data = _json_substitution[$ _name];
+                var _data_length = array_length(_data);
                 
-                for (var j = 0; j < _length2; ++j)
+                for (var j = 0; j < _data_length; ++j)
                 {
-                    global.__scunthorpe_substitutions[@ _index++] = [ _data[j], _name ];
+                    var _key = _data[j];
+                    
+                    global.__scunthorpe_substitutions[@ _index++] = [ _key, _name, string_length(_key), _name_length ];
                 }
             }
+            
+            global.___SCUNTHORPE_CENSOR = _json.censor;
             
             array_sort(global.__scunthorpe_substitutions, __sort_subsitution);
             
             buffer_delete(_buffer);
+            
+            delete _json;
         }
         
         if (file_exists($"{_directory}/extreme.dic"))
         {
-            __init(global.__scunthorpe_extreme, $"{_directory}/extreme.dic");
+            __init(global.__scunthorpe_extreme, global.__scunthorpe_extreme_group, $"{_directory}/extreme.dic");
         }
         else
         {
             array_resize(global.__scunthorpe_extreme, 0);
+            array_resize(global.__scunthorpe_extreme_group, 0);
         }
         
         if (file_exists($"{_directory}/regular.dic"))
         {
-            __init(global.__scunthorpe_regular, $"{_directory}/regular.dic");
+            __init(global.__scunthorpe_regular, global.__scunthorpe_regular_group, $"{_directory}/regular.dic");
         }
         else
         {
             array_resize(global.__scunthorpe_regular, 0);
+            array_resize(global.__scunthorpe_regular_group, 0);
         }
     }
     else
@@ -97,6 +125,9 @@ function init_scunthorpe(_directory)
         array_resize(global.__scunthorpe_substitutions, 0);
         
         array_resize(global.__scunthorpe_extreme, 0);
+        array_resize(global.__scunthorpe_extreme_group, 0);
+        
         array_resize(global.__scunthorpe_regular, 0);
+        array_resize(global.__scunthorpe_regular_group, 0);
     }
 }
