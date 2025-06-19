@@ -13,7 +13,7 @@ function string_scunthorpe(_string)
         
         for (var i = 0; i < _profanity_length; ++i)
         {
-            if (_string_length < i) break;
+            if (_string_length <= i) break;
             
             if (string_char_at(_string, _length + 1) == string_char_at(_profanity, i + 1))
             {
@@ -96,13 +96,11 @@ function string_scunthorpe(_string)
                     
                     _censor_length += _difference;
                     
-                    _string = string_copy(_string, 1, m - 1) + _censor_base_length + string_repeat(___SCUNTHORPE_CENSOR_PLACEHOLDER, _difference) + string_copy(_string, m + _censor_length, _string_length - (m + _censor_length - 1));
-                    
-                    m += _censor_length;
+                    _string = string_copy(_string, 1, m - 1) + _censor_base_length + string_repeat(___SCUNTHORPE_CENSOR_PLACEHOLDER, _difference) + string_copy(_string, m + _censor_length - 1, _string_length - (m + _censor_length) + 2);
                 }
                 else
                 {
-                    _string = string_copy(_string, 1, m - 1) + _censor_base_length + string_copy(_string, m + _censor_length, _string_length - (m + _censor_length - 1));
+                    _string = string_copy(_string, 1, m - 1) + _censor_base_length + string_copy(_string, m + _censor_length, _string_length - (m + _censor_length) + 2);
                 }
                 
                 m += _censor_length;
@@ -170,13 +168,11 @@ function string_scunthorpe(_string)
                     
                     _censor_length += _difference;
                     
-                    _string = string_copy(_string, 1, m - 1) + _censor_base_length + string_repeat(___SCUNTHORPE_CENSOR_PLACEHOLDER, _difference) + string_copy(_string, m + _censor_length, _string_length - (m + _censor_length - 1));
-                    
-                    m += _censor_length;
+                    _string = string_copy(_string, 1, m - 1) + _censor_base_length + string_repeat(___SCUNTHORPE_CENSOR_PLACEHOLDER, _difference) + string_copy(_string, m + _censor_length - 1, _string_length - (m + _censor_length) + 2);
                 }
                 else
                 {
-                    _string = string_copy(_string, 1, m - 1) + _censor_base_length + string_copy(_string, m + _censor_length, _string_length - (m + _censor_length - 1));
+                    _string = string_copy(_string, 1, m - 1) + _censor_base_length + string_copy(_string, m + _censor_length, _string_length - (m + _censor_length) + 2);
                 }
                 
                 m += _censor_length;

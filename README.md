@@ -3,7 +3,7 @@
 ---
 
 Scunthorpe is a lightweight, customizable profanity filter built for GameMaker.
-It was created out of the need for a filter that could handle common leetspeak and still be clean, efficient, and easy to drop into any project.
+It was created out of the need for a filter that could handle common leetspeak while still being clean, efficient, and easy to drop into any project.
 
 ### 🛠️ Features
 - ### 🔤 Regular Profanity Detection
@@ -20,17 +20,16 @@ It was created out of the need for a filter that could handle common leetspeak a
     - `$` → `S`
     - `7` → `T`
 
-    As well as have the ability to filter Leetspeak characters. (e.g., @ss, sh!t, fu(k)
-
 ### ✏️ Example Usage
 
 ```gml
 // Initialize filter settings using the files in the directory "scunthorpe/en"
+// NOTE: Censor symbol used: `*`
 init_scunthorpe("scunthorpe/en");
 
-// Filter a user input
+// Filter string using scunthorpe
 var _string = "you dumb @ss";
-var _string_scunthorpe = string_scunthorpe(user_input);
+var _string_scunthorpe = string_scunthorpe(_string);
 
 show_debug_message(_string_scunthorpe); // → "you dumb ***"
 ```
