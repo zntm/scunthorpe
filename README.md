@@ -1,18 +1,48 @@
 # Scunthorpe
 
-Scunthorpe is a simple string profanity filter for GameMaker.
+---
 
-It features
-- Regular profanity which can only be censored if its a whole word
-- Extreme profanity which will always be censored 
-- Possibility for patterns representing a single character (|< for K, |) for D, etc)
+Scunthorpe is a lightweight, customizable profanity filter built for GameMaker.
+It was created out of the need for a filter that could handle common leetspeak and still be clean, efficient, and easy to drop into any project.
 
-List of profanity words from: https://github.com/coffee-and-fun/google-profanity-words
+### 🛠️ Features
+- ### 🔤 Regular Profanity Detection
+    Filters profanity only when the word appears on its own (e.g., ass in "an ass", but not "class" or "assassin").
 
-### Quick Notes
-- Many of the profanities listed within this project have been modified to remove any unecessary variations or very uncommon words.
-- This system *can* filter out leetspeak such as '@ss', but it was intentional to only filter out words that include letters, meaning '@55' (for ass) and '8008$' (for boobs) will not be censored.
-- This isn't the perfect solution for filtering out profanity, nor probably is the most efficient. This was made in my free time because I couldn't find one that suited one of my projects.
+- ### 🔥 Extreme Profanity Detection
+    Filters profanity no matter where it is in the string (e.g., fuck) which can be used to filter out slurs.
 
-## Acknowledgements
+- ### 🧩 Pattern-Based Matching
+    Detects basic character substitutions like:
+    - `|<` → `K`
+    - `|)` → `D`
+    - `@` → `A`
+    - `$` → `S`
+    - `7` → `T`
+
+    As well as have the ability to filter Leetspeak characters. (e.g., @ss, sh!t, fu(k)
+
+### ✏️ Example Usage
+
+```gml
+// Initialize filter settings using the files in the directory "scunthorpe/en"
+init_scunthorpe("scunthorpe/en");
+
+// Filter a user input
+var _string = "you dumb @ss";
+var _string_scunthorpe = string_scunthorpe(user_input);
+
+show_debug_message(_string_scunthorpe); // → "you dumb ***"
+```
+
+### 📝 Quick Notes
+- The original profanity list has been cleaned up by removing redundant variations and rare/uncommon terms, and expanded to include more modern or recently used terms.
+- It can't figure out the meaning of the words, meaning this can't figure out if a message is sexual, hateful, violent, etc. 
+- This is not a perfect or highly optimized solution—it was made in my free time for a personal project when I couldn’t find one that fit my needs.
+
+### 💝 Acknowledgements
+- [google-profanity-words](https://github.com/coffee-and-fun/google-profanity-words)
+    
+    *NOTE: Many of the words have been modified, removed, or grouped based on frequency and relevance.*
+
 - [Scunthorpe](https://en.wikipedia.org/wiki/Scunthorpe)
