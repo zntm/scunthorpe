@@ -6,13 +6,13 @@ Scunthorpe is a lightweight, customizable profanity filter built for GameMaker.
 It was created out of the need for a filter that could handle common leetspeak while still being clean, efficient, and easy to drop into any project.
 
 ### 🛠️ Features
-- ### 🔤 Regular Profanity Detection
+- #### 🔤 Regular Profanity Detection
     Filters profanity only when the word appears on its own (e.g., ass in "an ass", but not "class" or "assassin").
 
-- ### 🔥 Extreme Profanity Detection
+- #### 🔥 Extreme Profanity Detection
     Filters profanity no matter where it is in the string (e.g., fuck) which can be used to filter out slurs.
 
-- ### 🧩 Pattern-Based Matching
+- #### 🧩 Pattern-Based Matching
     Detects basic character substitutions like:
     - `|<` → `K`
     - `|)` → `D`
