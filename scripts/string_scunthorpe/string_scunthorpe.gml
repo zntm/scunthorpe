@@ -182,5 +182,5 @@ function string_scunthorpe(_string)
         _index_regular += _group_length;
     }
     
-    return string_replace_all(_string, ___SCUNTHORPE_CENSOR_PLACEHOLDER, global.___SCUNTHORPE_CENSOR);
+    return string_replace_all(_string, ___SCUNTHORPE_CENSOR_PLACEHOLDER, global.__scunthorpe_censor);
 }
