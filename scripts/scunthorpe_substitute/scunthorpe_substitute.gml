@@ -1,8 +1,5 @@
-function scunthorpe_substitute(_string)
+function scunthorpe_substitute(_string, _substitutions, _substitutions_length)
 {
-    var _substitutions        = global.__scunthorpe_substitutions;
-    var _substitutions_length = array_length(_substitutions);
-    
     for (var i = 0; i < _substitutions_length; ++i)
     {
         var _substitution = _substitutions[i];
