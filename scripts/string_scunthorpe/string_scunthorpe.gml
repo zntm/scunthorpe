@@ -1,5 +1,5 @@
-#macro ___SCUNTHORPE_OFFSET_PLACEHOLDER "\0"
-#macro ___SCUNTHORPE_CENSOR_PLACEHOLDER chr(0x8000)
+#macro ___SCUNTHORPE_OFFSET_PLACEHOLDER chr(0)
+#macro ___SCUNTHORPE_CENSOR_PLACEHOLDER ___SCUNTHORPE_OFFSET_PLACEHOLDER
 
 /**
  * Profanity filtering function using the "Scunthorpe problem" approach.
@@ -24,14 +24,18 @@ function string_scunthorpe(_string)
             
             var _a = _substitution[0];
             
-            if (string_pos(_a, _string) <= 0) continue;
+            var _count = string_count(_a, _string);
             
-            var _repeat = (_substitution[2] - _substitution[3]) * string_count(_a, _string);
+            if (_count <= 0) continue;
             
-            _length += _repeat;
+            _length += (_substitution[2] - _substitution[3]) * _count;
+            
+            show_debug_message($"l: {_length}")
             
             _string = string_replace_all(_string, _a, "");
         }
+        
+        show_debug_message($"l2: {_length}")
         
         return _length;
     }
@@ -41,7 +45,7 @@ function string_scunthorpe(_string)
     var _substitutions        = global.__scunthorpe_substitutions;
     var _substitutions_length = array_length(_substitutions);
     
-    var _string_substituted = scunthorpe_substitute(_string, _substitutions, _substitutions_length);
+    var _string_substituted = scunthorpe_substitute(string_lower(_string), _substitutions, _substitutions_length);
     
     var _profanity_extreme        = global.__scunthorpe_extreme;
     var _profanity_extreme_length = array_length(_profanity_extreme);
@@ -61,20 +65,28 @@ function string_scunthorpe(_string)
         var _profanity_length = i;
         
         var _censor_base_length = string_repeat(___SCUNTHORPE_CENSOR_PLACEHOLDER, _profanity_length);
+        var _offset_length = string_repeat(___SCUNTHORPE_OFFSET_PLACEHOLDER, _profanity_length);
         
         for (var j = 0; j < _group_length; ++j)
         {
             var _profanity = _profanity_extreme[_index_extreme + j];
             
-            var m = 1;
+            var m = _string_length;
             
-            while (m < _string_length)
+            // _string = string_replace_all(_string, _profanity, _censor_base_length);
+            
+            var _string_substituted2 = _string_substituted;
+            
+            while (m > 0)
             {
-                var _string_part = string_delete(_string_substituted, 1, m - 1);
+                var _string_part = string_replace_all(string_delete(_string_substituted2, 1, m - 1), ___SCUNTHORPE_OFFSET_PLACEHOLDER, "");
+                
+                if (_profanity == "fuck")
+                show_debug_message($"{_string_substituted2} {m} {_string_part} {_profanity}");
                 
                 if (!string_starts_with(_string_part, _profanity))
                 {
-                    ++m;
+                    --m;
                     
                     continue;
                 }
@@ -86,6 +98,8 @@ function string_scunthorpe(_string)
                     var _difference = _censor_length - _profanity_length;
                     
                     _censor_length += _difference;
+                    
+                    show_debug_message($"d: {m} {_profanity_length} {_censor_length} {_difference}")
                     
                     _string = string_copy(_string, 1, m - 1) + _censor_base_length + string_repeat(___SCUNTHORPE_CENSOR_PLACEHOLDER, _difference) + string_copy(_string, m + _censor_length - 1, _string_length - (m + _censor_length) + 2);
                 }
@@ -128,7 +142,7 @@ function string_scunthorpe(_string)
             
             while (m < _string_length)
             {
-                var _string_part = string_delete(_string_substituted, 1, m - 1);
+                var _string_part = string_replace_all(string_delete(_string_substituted, 1, m - 1), ___SCUNTHORPE_OFFSET_PLACEHOLDER, "");
                 
                 if (!string_starts_with(_string_part, _profanity))
                 {
