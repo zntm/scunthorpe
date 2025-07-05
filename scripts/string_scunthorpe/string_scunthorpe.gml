@@ -9,13 +9,9 @@
  */
 function string_scunthorpe(_string)
 {
-    var _timer = get_timer();
-    
     static __censor_length = function(_pos, _string, _profanity, _profanity_length, _substitutions, _substitutions_length)
     {
         _string = string_delete(_string, 1, _pos - 1);
-        
-        var _string_length = string_length(_string);
         
         var _length = _profanity_length;
         
@@ -123,10 +119,6 @@ function string_scunthorpe(_string)
             _index_regular += _group_length;
         }
     }
-    
-    _timer = get_timer() - _timer;
-    
-    show_debug_message($"{_timer / 1_000_000}s {_timer}");
     
     return _string;
 }
