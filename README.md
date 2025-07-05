@@ -24,7 +24,7 @@ It was created out of the need for a filter that could handle common leetspeak w
 
 ```gml
 // Initialize filter settings using the files in the directory "scunthorpe/en"
-// NOTE: Censor symbol used: `*`
+// NOTE: Censor symbol used: '*'
 init_scunthorpe("scunthorpe/en");
 
 // Filter string using scunthorpe
