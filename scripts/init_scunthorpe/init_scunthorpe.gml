@@ -1,4 +1,4 @@
-global.__scunthorpe_censor = "*";
+global.__scunthorpe_censor_char = "*";
 global.__scunthorpe_substitutions = [];
 
 global.__scunthorpe_extreme = [];
@@ -91,7 +91,7 @@ function init_scunthorpe(_directory)
                 }
             }
             
-            global.__scunthorpe_censor = _json.censor;
+            global.__scunthorpe_censor_char = _json.censor;
             
             array_sort(global.__scunthorpe_substitutions, __sort_subsitution);
             
