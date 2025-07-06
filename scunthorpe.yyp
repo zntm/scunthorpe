@@ -30,7 +30,6 @@
     {"id":{"name":"obj_Control","path":"objects/obj_Control/obj_Control.yy",},},
     {"id":{"name":"rm_Scunthorpe","path":"rooms/rm_Scunthorpe/rm_Scunthorpe.yy",},},
     {"id":{"name":"init_scunthorpe","path":"scripts/init_scunthorpe/init_scunthorpe.yy",},},
-    {"id":{"name":"scunthorpe_substitute","path":"scripts/scunthorpe_substitute/scunthorpe_substitute.yy",},},
     {"id":{"name":"string_scunthorpe","path":"scripts/string_scunthorpe/string_scunthorpe.yy",},},
   ],
   "resourceType":"GMProject",
