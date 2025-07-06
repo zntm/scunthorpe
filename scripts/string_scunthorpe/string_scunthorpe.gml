@@ -33,6 +33,7 @@ function string_scunthorpe(_string)
         
         return _string;
     }
+    
     static __censor_length = function(_pos, _string, _profanity, _profanity_length, _substitutions, _substitutions_length)
     {
         _string = string_delete(_string, 1, _pos - 1);
